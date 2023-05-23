@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "de17bf6d-3bfa-4505-a72a-68dc9cc6a040",
+		"name": "File Upload Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19689722"
+	},
+	"item": [
+		{
+			"name": "Upload Files",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": [
+								"/C:/Users/khoil/Downloads/demo(1).zip",
+								"/C:/Users/khoil/Downloads/demo.zip"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/file-upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"file-upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Uploaded Files",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/uploaded-files",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"uploaded-files"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Uploaded File Metadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/uploaded-files/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"uploaded-files",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Uploaded File Content",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/uploaded-files/1/content",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"uploaded-files",
+						"1",
+						"content"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
