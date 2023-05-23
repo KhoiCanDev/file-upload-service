@@ -45,8 +45,12 @@ public class FileUploadService {
         return Optional.empty();
     }
 
-    public ResponseEntity<List<UploadedFile>> saveFiles(MultipartFile[] files) {
+    public ResponseEntity saveFiles(MultipartFile[] files) {
         List<UploadedFile> result = new ArrayList<>();
+
+        if (files.length == 0) {
+            return ResponseEntity.badRequest().body("No files selected");
+        }
 
         try {
             for (MultipartFile file: files) {

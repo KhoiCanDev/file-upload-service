@@ -26,7 +26,7 @@ public class FileUploadController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<List<UploadedFile>> addFiles(HttpServletRequest request, @RequestPart() MultipartFile[] files) {
+    public ResponseEntity addFiles(HttpServletRequest request, @RequestPart() MultipartFile[] files) {
         return fileUploadService.saveFiles(files);
     }
 }
