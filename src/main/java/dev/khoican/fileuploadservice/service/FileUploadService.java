@@ -2,6 +2,7 @@ package dev.khoican.fileuploadservice.service;
 
 import dev.khoican.fileuploadservice.model.UploadedFile;
 import dev.khoican.fileuploadservice.repository.UploadedFileRepository;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Sort;
@@ -17,6 +18,12 @@ import java.util.*;
 
 @Component
 public class FileUploadService {
+    private static final HashSet<String> ALLOWED_EXTS = new HashSet<>(Arrays.asList(
+            "jpg", "jpeg", "png",
+            "mp3", "mp4", "ogg",
+            "pdf", "doc", "docx", "xlsx", "xls",
+            "zip", "rar", "7z"
+    ));
 
     private final UploadedFileRepository repository;
 
@@ -52,19 +59,24 @@ public class FileUploadService {
             return ResponseEntity.badRequest().body("No files selected");
         }
 
+        for (MultipartFile file: files) {
+            String fileExt =  FilenameUtils.getExtension(file.getOriginalFilename());
+            if (!ALLOWED_EXTS.contains(fileExt.toLowerCase())) {
+                return ResponseEntity.badRequest().body("Extension '" + fileExt + "' is not allowed");
+            }
+        }
+
         try {
             for (MultipartFile file: files) {
                 UUID uuid = UUID.randomUUID();
                 String uuidStr = uuid.toString();
                 String fileAbsPath = storeFile(file, uuidStr);
-
                 UploadedFile uploadedFile = new UploadedFile();
                 uploadedFile.setFileName(file.getOriginalFilename());
                 uploadedFile.setFilePath(fileAbsPath);
                 uploadedFile.setFileSize(file.getSize());
                 uploadedFile.setCreated(new Date().getTime());
                 repository.save(uploadedFile);
-
                 result.add(uploadedFile);
             }
             return ResponseEntity.ok(result);
