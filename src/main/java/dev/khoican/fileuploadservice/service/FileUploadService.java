@@ -69,7 +69,7 @@ public class FileUploadService {
             }
             return ResponseEntity.ok(result);
         } catch (Exception ex) {
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.internalServerError().body("Error while processing request");
         }
     }
 
